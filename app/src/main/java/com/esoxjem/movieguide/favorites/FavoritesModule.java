@@ -1,6 +1,6 @@
 package com.esoxjem.movieguide.favorites;
 
-import com.esoxjem.movieguide.AppModule;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -9,8 +9,9 @@ import dagger.Provides;
 
 /**
  * @author pulkitkumar
+ * @author Ashwini Kumar.
  */
-@Module(includes = AppModule.class)
+@Module
 public class FavoritesModule
 {
     @Provides
@@ -18,5 +19,12 @@ public class FavoritesModule
     IFavoritesInteractor provideFavouritesInteractor(FavoritesStore store)
     {
         return new FavoritesInteractor(store);
+    }
+
+    @Provides
+    @Singleton
+    FavoritesStore provideFavoritesStore(Context context)
+    {
+        return new FavoritesStore(context);
     }
 }

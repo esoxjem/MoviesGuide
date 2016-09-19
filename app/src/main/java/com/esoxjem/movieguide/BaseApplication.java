@@ -4,71 +4,43 @@ import android.app.Application;
 import android.content.Context;
 import android.os.StrictMode;
 
-import com.esoxjem.movieguide.details.DetailsModule;
 import com.esoxjem.movieguide.favorites.FavoritesModule;
-import com.esoxjem.movieguide.listing.ListingModule;
 import com.esoxjem.movieguide.network.NetworkModule;
-import com.esoxjem.movieguide.sorting.SortingModule;
 
 /**
  * @author arun
  */
 public class BaseApplication extends Application
 {
-    private AppComponent component;
+    private AppComponent appComponent;
+
+    public static BaseApplication get(Context context)
+    {
+        return (BaseApplication) context.getApplicationContext();
+    }
 
     @Override
     public void onCreate()
     {
         super.onCreate();
         StrictMode.enableDefaults();
+        initAppComponent();
     }
 
-    public static AppComponent getAppComponent(Context context)
+    public AppComponent initAppComponent()
     {
-        BaseApplication app = (BaseApplication) context.getApplicationContext();
-        if (app.component == null)
-        {
-            app.component = DaggerAppComponent.builder()
-                    .appModule(app.getAppModule())
-                    .networkModule(app.getNetworkModule())
-                    .detailsModule(app.getDetailsModule())
-                    .favoritesModule(app.getFavoritesModule())
-                    .listingModule(app.getListingModule())
-                    .sortingModule(app.getSortingModule())
-                    .build();
-        }
-        return app.component;
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .networkModule(new NetworkModule())
+                .favoritesModule(new FavoritesModule())
+                .build();
+
+        return appComponent;
     }
 
-    private AppModule getAppModule()
+    public AppComponent getAppComponent()
     {
-        return new AppModule(this);
-    }
-
-    private DetailsModule getDetailsModule()
-    {
-        return new DetailsModule();
-    }
-
-    private FavoritesModule getFavoritesModule()
-    {
-        return new FavoritesModule();
-    }
-
-    private ListingModule getListingModule()
-    {
-        return new ListingModule();
-    }
-
-    private SortingModule getSortingModule()
-    {
-        return new SortingModule();
-    }
-
-    private NetworkModule getNetworkModule()
-    {
-        return new NetworkModule();
+        return appComponent;
     }
 
 }

@@ -1,26 +1,49 @@
 package com.esoxjem.movieguide.sorting;
 
-import com.esoxjem.movieguide.AppModule;
+import android.content.Context;
 
-import javax.inject.Singleton;
+import com.esoxjem.movieguide.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
  * @author pulkitkumar
+ * @author Ashwini Kumar.
  */
-@Module(includes = AppModule.class)
+@Module
 public class SortingModule
 {
+    private SortingDialogFragment sortingDialogFragment;
+
+    public SortingModule(SortingDialogFragment sortingDialogFragment)
+    {
+        this.sortingDialogFragment = sortingDialogFragment;
+    }
+
     @Provides
-    @Singleton
+    @ActivityScope
+    SortingDialogFragment provideSortingDialogFragment()
+    {
+        return sortingDialogFragment;
+    }
+
+    @Provides
+    @ActivityScope
     ISortingDialogInteractor providesSortingDialogInteractor(SortingOptionStore store)
     {
         return new SortingDialogInteractor(store);
     }
 
     @Provides
+    @ActivityScope
+    SortingOptionStore providesSortingOptionStore(Context context)
+    {
+        return new SortingOptionStore(context);
+    }
+
+    @Provides
+    @ActivityScope
     ISortingDialogPresenter providePresenter(ISortingDialogInteractor interactor)
     {
         return new SortingDialogPresenter(interactor);

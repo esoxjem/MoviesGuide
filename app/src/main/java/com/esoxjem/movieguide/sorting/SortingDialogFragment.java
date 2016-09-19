@@ -39,7 +39,7 @@ public class SortingDialogFragment extends DialogFragment implements ISortingDia
     {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        BaseApplication.getAppComponent(getContext()).inject(this);
+        BaseApplication.get(getContext()).getAppComponent().plus(new SortingModule(this)).inject(this);
         sortingDialogPresenter.setView(this);
     }
 

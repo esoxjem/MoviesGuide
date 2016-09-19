@@ -1,25 +1,38 @@
 package com.esoxjem.movieguide.listing;
 
-import com.esoxjem.movieguide.network.NetworkModule;
-import com.esoxjem.movieguide.sorting.SortingModule;
-import com.esoxjem.movieguide.favorites.FavoritesModule;
+import android.content.Context;
+
+import com.esoxjem.movieguide.ActivityScope;
 import com.esoxjem.movieguide.favorites.IFavoritesInteractor;
 import com.esoxjem.movieguide.network.RequestHandler;
 import com.esoxjem.movieguide.sorting.SortingOptionStore;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
 /**
  * @author pulkitkumar
+ * @author Ashwini Kumar.
  */
-@Module(includes = {NetworkModule.class, SortingModule.class, FavoritesModule.class})
+@Module
 public class ListingModule
 {
+    private MoviesListingFragment moviesListingFragment;
+
+    public ListingModule(MoviesListingFragment moviesListingFragment)
+    {
+        this.moviesListingFragment = moviesListingFragment;
+    }
+
     @Provides
-    @Singleton
+    @ActivityScope
+    MoviesListingFragment provideMoviesListingFragment()
+    {
+        return moviesListingFragment;
+    }
+
+    @Provides
+    @ActivityScope
     IMoviesListingInteractor provideMovieListingInteractor(IFavoritesInteractor favoritesInteractor,
                                                            RequestHandler requestHandler,
                                                            SortingOptionStore sortingOptionStore)
@@ -28,8 +41,16 @@ public class ListingModule
     }
 
     @Provides
+    @ActivityScope
     IMoviesListingPresenter provideMovieListingPresenter(IMoviesListingInteractor interactor)
     {
         return new MoviesListingPresenter(interactor);
+    }
+
+    @Provides
+    @ActivityScope
+    SortingOptionStore providesSortingOptionStore(Context context)
+    {
+        return new SortingOptionStore(context);
     }
 }

@@ -3,7 +3,7 @@ package com.esoxjem.movieguide.sorting;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import javax.inject.Inject;
+import com.esoxjem.movieguide.BaseApplication;
 
 /**
  * @author arun
@@ -14,9 +14,9 @@ public class SortingOptionStore
     private static final String SELECTED_OPTION = "selectedOption";
     private static final String PREF_NAME = "SortingOptionStore";
 
-    @Inject public SortingOptionStore(Context context)
+    public SortingOptionStore(Context context)
     {
-        pref = context.getApplicationContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        pref = BaseApplication.get(context).getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public void setSelectedOption(SortType sortType)
