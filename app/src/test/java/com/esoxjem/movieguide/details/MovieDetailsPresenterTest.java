@@ -3,7 +3,7 @@ package com.esoxjem.movieguide.details;
 import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.Review;
 import com.esoxjem.movieguide.Video;
-import com.esoxjem.movieguide.favorites.FavoritesInteractor;
+import com.esoxjem.movieguide.favorites.IFavoritesInteractor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +25,9 @@ public class MovieDetailsPresenterTest
     @Mock
     private IMovieDetailsView view;
     @Mock
-    private MovieDetailsInteractor movieDetailsInteractor;
+    private IMovieDetailsInteractor movieDetailsInteractor;
     @Mock
-    private FavoritesInteractor favoritesInteractor;
+    private IFavoritesInteractor favoritesInteractor;
     @Mock
     Movie movie;
     @Mock
