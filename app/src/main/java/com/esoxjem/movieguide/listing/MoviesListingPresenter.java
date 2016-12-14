@@ -8,7 +8,6 @@ import java.util.List;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -41,19 +40,9 @@ public class MoviesListingPresenter implements IMoviesListingPresenter
     @Override
     public void displayMovies()
     {
+        showLoading();
         fetchSubscription = moviesInteractor.fetchMovies().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Action0()
-                {
-                    @Override
-                    public void call()
-                    {
-                        if (isViewAttached())
-                        {
-                            view.loadingStarted();
-                        }
-                    }
-                })
                 .subscribe(new Subscriber<List<Movie>>()
                 {
                     @Override
@@ -65,15 +54,33 @@ public class MoviesListingPresenter implements IMoviesListingPresenter
                     @Override
                     public void onError(Throwable e)
                     {
-                        view.loadingFailed(e.getMessage());
+                        onMovieFetchFailed(e);
                     }
 
                     @Override
                     public void onNext(List<Movie> movies)
                     {
-                        view.showMovies(movies);
+                        onMovieFetchSuccess(movies);
                     }
                 });
+    }
+
+    void showLoading()
+    {
+        if (isViewAttached())
+        {
+            view.loadingStarted();
+        }
+    }
+
+    void onMovieFetchSuccess(List<Movie> movies)
+    {
+        view.showMovies(movies);
+    }
+
+    void onMovieFetchFailed(Throwable e)
+    {
+        view.loadingFailed(e.getMessage());
     }
 
     private boolean isViewAttached()
