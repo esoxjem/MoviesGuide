@@ -79,12 +79,17 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                     @Override
                     public void onNext(List<Video> videos)
                     {
-                        if (isViewAttached())
-                        {
-                            view.showTrailers(videos);
-                        }
+                        onGetTrailersSuccess(videos);
                     }
                 });
+    }
+
+    void onGetTrailersSuccess(List<Video> videos)
+    {
+        if (isViewAttached())
+        {
+            view.showTrailers(videos);
+        }
     }
 
     @Override
@@ -109,12 +114,17 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                     @Override
                     public void onNext(List<Review> reviews)
                     {
-                        if (isViewAttached())
-                        {
-                            view.showReviews(reviews);
-                        }
+                        onGetReviewsSuccess(reviews);
                     }
                 });
+    }
+
+    void onGetReviewsSuccess(List<Review> reviews)
+    {
+        if (isViewAttached())
+        {
+            view.showReviews(reviews);
+        }
     }
 
     @Override
