@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * @author pulkitkumar
@@ -34,8 +35,12 @@ public class NetworkModule
     @Singleton
     OkHttpClient provideOkHttpClient(CookieManager cookieManager)
     {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         return new okhttp3.OkHttpClient.Builder()
                 .connectTimeout(CONNECT_TIMEOUT_IN_MS, TimeUnit.MILLISECONDS)
+                .addInterceptor(loggingInterceptor)
                 .build();
     }
 
