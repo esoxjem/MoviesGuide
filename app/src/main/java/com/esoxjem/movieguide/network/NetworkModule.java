@@ -1,6 +1,5 @@
 package com.esoxjem.movieguide.network;
 
-import com.squareup.okhttp.OkHttpClient;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -11,6 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
 
 /**
  * @author pulkitkumar
@@ -18,7 +18,7 @@ import dagger.Provides;
 @Module
 public class NetworkModule
 {
-    public static final int TIMEOUT_IN_MS = 30000;
+    public static final int CONNECT_TIMEOUT_IN_MS = 30000;
 
     @Provides
     @Singleton
@@ -34,11 +34,9 @@ public class NetworkModule
     @Singleton
     OkHttpClient provideOkHttpClient(CookieManager cookieManager)
     {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setConnectTimeout(TIMEOUT_IN_MS, TimeUnit.MILLISECONDS);
-        okHttpClient.setReadTimeout(TIMEOUT_IN_MS, TimeUnit.MILLISECONDS);
-        okHttpClient.setCookieHandler(cookieManager);
-        return okHttpClient;
+        return new okhttp3.OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIMEOUT_IN_MS, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     @Provides
