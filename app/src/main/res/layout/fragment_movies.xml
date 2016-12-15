@@ -5,6 +5,7 @@
              tools:context=".listing.MoviesListingFragment">
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/movies_listing"
         android:scrollbars="vertical"
         android:layout_width="match_parent"

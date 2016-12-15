@@ -21,12 +21,19 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class MoviesListingActivityTest
 {
     @Rule
-    public final ActivityTestRule<MoviesListingActivity> moviesListingActivityActivityTestRule = new ActivityTestRule<>(MoviesListingActivity.class);
+    public final ActivityTestRule<MoviesListingActivity> activityTestRule = new ActivityTestRule<>(MoviesListingActivity.class);
 
     @Test
     public void shouldBeAbleToLaunchMainScreen()
     {
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.action_sort)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldBeAbleToLoadMovies() throws InterruptedException
+    {
+        Thread.sleep(3000);
+        onView(withId(R.id.movies_listing)).check(matches(isDisplayed()));
     }
 }

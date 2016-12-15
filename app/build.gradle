@@ -31,8 +31,9 @@ android {
 }
 
 ext {
-    supportLibVersion = '24.0.0'
-    okhttpVersion = '3.4.0'
+    supportLibVersion = '24.1.1'
+    okhttpVersion = '3.5.0'
+    daggerVersion = '2.5'
 }
 
 dependencies {
@@ -61,19 +62,18 @@ dependencies {
     compile 'net.jcip:jcip-annotations:1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.moshi:moshi:1.1.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
 
     // Dependency Injection
-    apt 'com.google.dagger:dagger-compiler:2.5'
-    compile 'com.google.dagger:dagger:2.5'
+    apt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compile "com.google.dagger:dagger:${daggerVersion}"
     provided 'javax.annotation:jsr250-api:1.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
 
     // Unit Tests
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
 
     // UI Tests
-    androidTestCompile 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }

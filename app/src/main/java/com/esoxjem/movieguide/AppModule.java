@@ -10,8 +10,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * @author pulkitkumar
  * @author arunsasidharan
+ * @author pulkitkumar
  */
 @Module
 public class AppModule

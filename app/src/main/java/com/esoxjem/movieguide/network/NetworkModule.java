@@ -1,9 +1,6 @@
 package com.esoxjem.movieguide.network;
 
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -14,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
+ * @author arunsasidharan
  * @author pulkitkumar
  */
 @Module
@@ -23,17 +21,7 @@ public class NetworkModule
 
     @Provides
     @Singleton
-    CookieManager provideCookieManager()
-    {
-        CookieManager cookieManager = new CookieManager();
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        CookieHandler.setDefault(cookieManager);
-        return cookieManager;
-    }
-
-    @Provides
-    @Singleton
-    OkHttpClient provideOkHttpClient(CookieManager cookieManager)
+    OkHttpClient provideOkHttpClient()
     {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

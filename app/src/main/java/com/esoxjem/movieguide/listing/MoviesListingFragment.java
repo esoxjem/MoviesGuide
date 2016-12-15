@@ -119,6 +119,7 @@ public class MoviesListingFragment extends Fragment implements IMoviesListingVie
     {
         this.movies.clear();
         this.movies.addAll(movies);
+        moviesListing.setVisibility(View.VISIBLE);
         adapter.notifyDataSetChanged();
         callback.onMoviesLoaded(movies.get(0));
     }
