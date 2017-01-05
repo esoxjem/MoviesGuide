@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".listing.MoviesListingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,6 +23,7 @@
         </activity>
         <activity
             android:name=".details.MovieDetailsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".listing.MoviesListingActivity"
             android:theme="@style/AppTheme">
             <meta-data
