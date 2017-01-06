@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
 /**
  * @author arun
  */
-public class MovieDetailsPresenter implements IMovieDetailsPresenter
+class MovieDetailsPresenter implements IMovieDetailsPresenter
 {
     private IMovieDetailsView view;
     private IMovieDetailsInteractor movieDetailsInteractor;
@@ -24,7 +24,7 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
     private Subscription trailersSubscription;
     private Subscription reviewSubscription;
 
-    public MovieDetailsPresenter(IMovieDetailsInteractor movieDetailsInteractor, IFavoritesInteractor favoritesInteractor)
+    MovieDetailsPresenter(IMovieDetailsInteractor movieDetailsInteractor, IFavoritesInteractor favoritesInteractor)
     {
         this.movieDetailsInteractor = movieDetailsInteractor;
         this.favoritesInteractor = favoritesInteractor;
@@ -67,13 +67,13 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                     @Override
                     public void onCompleted()
                     {
-
+                        // do nothing
                     }
 
                     @Override
                     public void onError(Throwable e)
                     {
-
+                        // do nothing
                     }
 
                     @Override
@@ -84,7 +84,7 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                 });
     }
 
-    void onGetTrailersSuccess(List<Video> videos)
+    private void onGetTrailersSuccess(List<Video> videos)
     {
         if (isViewAttached())
         {
@@ -102,13 +102,13 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                     @Override
                     public void onCompleted()
                     {
-
+                        // do nothing
                     }
 
                     @Override
                     public void onError(Throwable e)
                     {
-
+                        // do nothing
                     }
 
                     @Override
@@ -119,7 +119,7 @@ public class MovieDetailsPresenter implements IMovieDetailsPresenter
                 });
     }
 
-    void onGetReviewsSuccess(List<Review> reviews)
+    private void onGetReviewsSuccess(List<Review> reviews)
     {
         if (isViewAttached())
         {

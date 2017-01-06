@@ -28,6 +28,7 @@ class MoviesListingPresenter implements IMoviesListingPresenter
     public void setView(IMoviesListingView view)
     {
         this.view = view;
+        displayMovies();
     }
 
     @Override
@@ -75,7 +76,10 @@ class MoviesListingPresenter implements IMoviesListingPresenter
 
     private void onMovieFetchSuccess(List<Movie> movies)
     {
-        view.showMovies(movies);
+        if (isViewAttached())
+        {
+            view.showMovies(movies);
+        }
     }
 
     private void onMovieFetchFailed(Throwable e)

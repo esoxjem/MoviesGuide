@@ -43,7 +43,6 @@ public class MoviesListingPresenterTest
     {
         MockitoAnnotations.initMocks(this);
         presenter = new MoviesListingPresenter(interactor);
-        presenter.setView(view);
     }
 
     @After
@@ -61,7 +60,7 @@ public class MoviesListingPresenterTest
         responseObservable.subscribe(testSubscriber);
         when(interactor.fetchMovies()).thenReturn(responseObservable);
 
-        presenter.displayMovies();
+        presenter.setView(view);
         testScheduler.triggerActions();
 
         testSubscriber.assertNoErrors();
