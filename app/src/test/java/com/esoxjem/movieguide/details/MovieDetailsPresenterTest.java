@@ -45,34 +45,12 @@ public class MovieDetailsPresenterTest
     }
 
     @Test
-    public void shouldShowDetails()
-    {
-        movieDetailsPresenter.showDetails(movie);
-        verify(view).showDetails(movie);
-    }
-
-    @Test
-    public void shouldShowTrailers()
-    {
-        movieDetailsPresenter.onGetTrailersSuccess(videos);
-        verify(view).showTrailers(videos);
-    }
-
-    @Test
-    public void shouldShowReviews()
-    {
-        movieDetailsPresenter.onGetReviewsSuccess(reviews);
-        verify(view).showReviews(reviews);
-    }
-
-    @Test
     public void shouldUnfavoriteIfFavoriteTapped()
     {
         when(movie.getId()).thenReturn("12345");
         when(favoritesInteractor.isFavorite(movie.getId())).thenReturn(true);
         movieDetailsPresenter.onFavoriteClick(movie);
         verify(view).showUnFavorited();
-
     }
 
     @Test
@@ -82,7 +60,6 @@ public class MovieDetailsPresenterTest
         when(favoritesInteractor.isFavorite(movie.getId())).thenReturn(false);
         movieDetailsPresenter.onFavoriteClick(movie);
         verify(view).showFavorited();
-
     }
 
 }

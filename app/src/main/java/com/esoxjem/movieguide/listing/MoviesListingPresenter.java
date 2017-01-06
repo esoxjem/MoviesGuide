@@ -13,13 +13,13 @@ import rx.schedulers.Schedulers;
 /**
  * @author arun
  */
-public class MoviesListingPresenter implements IMoviesListingPresenter
+class MoviesListingPresenter implements IMoviesListingPresenter
 {
     private IMoviesListingView view;
     private IMoviesListingInteractor moviesInteractor;
     private Subscription fetchSubscription;
 
-    public MoviesListingPresenter(IMoviesListingInteractor interactor)
+    MoviesListingPresenter(IMoviesListingInteractor interactor)
     {
         moviesInteractor = interactor;
     }
@@ -48,7 +48,7 @@ public class MoviesListingPresenter implements IMoviesListingPresenter
                     @Override
                     public void onCompleted()
                     {
-
+                        // Do nothing
                     }
 
                     @Override
@@ -65,7 +65,7 @@ public class MoviesListingPresenter implements IMoviesListingPresenter
                 });
     }
 
-    void showLoading()
+    private void showLoading()
     {
         if (isViewAttached())
         {
@@ -73,12 +73,12 @@ public class MoviesListingPresenter implements IMoviesListingPresenter
         }
     }
 
-    void onMovieFetchSuccess(List<Movie> movies)
+    private void onMovieFetchSuccess(List<Movie> movies)
     {
         view.showMovies(movies);
     }
 
-    void onMovieFetchFailed(Throwable e)
+    private void onMovieFetchFailed(Throwable e)
     {
         view.loadingFailed(e.getMessage());
     }
