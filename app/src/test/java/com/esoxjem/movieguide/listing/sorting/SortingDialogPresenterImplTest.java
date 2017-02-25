@@ -1,5 +1,10 @@
 package com.esoxjem.movieguide.listing.sorting;
 
+import com.esoxjem.movieguide.data.model.SortType;
+import com.esoxjem.movieguide.data.modelpresenter.SortingDialogInteractor;
+import com.esoxjem.movieguide.presenter.SortingDialogPresenterImpl;
+import com.esoxjem.movieguide.view.presenterview.SortingDialogView;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

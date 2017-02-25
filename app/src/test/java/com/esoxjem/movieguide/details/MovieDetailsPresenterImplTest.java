@@ -1,9 +1,12 @@
 package com.esoxjem.movieguide.details;
 
-import com.esoxjem.movieguide.Movie;
-import com.esoxjem.movieguide.Review;
-import com.esoxjem.movieguide.Video;
-import com.esoxjem.movieguide.favorites.FavoritesInteractor;
+import com.esoxjem.movieguide.data.model.Movie;
+import com.esoxjem.movieguide.data.model.Review;
+import com.esoxjem.movieguide.data.model.Video;
+import com.esoxjem.movieguide.data.modelpresenter.MovieDetailsInteractor;
+import com.esoxjem.movieguide.data.modelpresenter.FavoritesInteractor;
+import com.esoxjem.movieguide.presenter.MovieDetailsPresenterImpl;
+import com.esoxjem.movieguide.view.presenterview.MovieDetailsView;
 
 import org.junit.After;
 import org.junit.Before;
