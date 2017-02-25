@@ -5,6 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.esoxjem.movieguide.R;
+import com.esoxjem.movieguide.view.activity.MoviesListingActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

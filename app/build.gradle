@@ -89,3 +89,8 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 }
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}

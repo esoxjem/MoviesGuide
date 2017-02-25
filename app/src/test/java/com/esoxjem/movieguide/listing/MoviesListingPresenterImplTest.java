@@ -1,6 +1,9 @@
 package com.esoxjem.movieguide.listing;
 
-import com.esoxjem.movieguide.Movie;
+import com.esoxjem.movieguide.data.model.Movie;
+import com.esoxjem.movieguide.data.modelpresenter.MoviesListingInteractor;
+import com.esoxjem.movieguide.presenter.MoviesListingPresenterImpl;
+import com.esoxjem.movieguide.view.presenterview.MoviesListingView;
 
 import org.junit.After;
 import org.junit.Before;
