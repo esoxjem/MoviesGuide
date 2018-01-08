@@ -10,6 +10,21 @@ Add your themoviedb.org API key in `root/local.properties`
 ```
 tmdb_api_key=YOUR_API_KEY
 ```
+In case you are unable to locate to root/local.properties file you can actually also add your API_KEY in the following way-
+
+1)Locate RequestInterceptor.java in "network" package
+
+2)Edit the following code :
+
+    HttpUrl url = originalHttpUrl.newBuilder()
+                .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
+                .build();
+
+    in the following way-
+
+    HttpUrl url = originalHttpUrl.newBuilder()
+                .addQueryParameter("api_key", "YOUR_API_KEY_HERE")
+                .build();
 
 Check out the Kotlin version [here](https://github.com/esoxjem/MovieGuide-Kotlin)
 
