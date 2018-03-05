@@ -103,17 +103,17 @@ public class SortingDialogFragment extends DialogFragment implements SortingDial
         {
             case R.id.most_popular:
                 sortingDialogPresenter.onPopularMoviesSelected();
-                moviesListingPresenter.displayMovies();
+                moviesListingPresenter.firstPage();
                 break;
 
             case R.id.highest_rated:
                 sortingDialogPresenter.onHighestRatedMoviesSelected();
-                moviesListingPresenter.displayMovies();
+                moviesListingPresenter.firstPage();
                 break;
 
             case R.id.favorites:
                 sortingDialogPresenter.onFavoritesSelected();
-                moviesListingPresenter.displayMovies();
+                moviesListingPresenter.firstPage();
                 break;
         }
     }
