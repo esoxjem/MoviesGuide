@@ -139,6 +139,9 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
 
     @Override
     public void loadingFailed(String errorMessage) {
+        if(movies.size() == 0){
+            errorMessage = getString(R.string.non_favorites);
+        }
         Snackbar.make(moviesListing, errorMessage, Snackbar.LENGTH_INDEFINITE).show();
     }
 

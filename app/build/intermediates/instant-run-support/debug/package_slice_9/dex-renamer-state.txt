@@ -1,0 +1,4 @@
+#Wed Jun 06 15:33:00 IST 2018
+base.0=/Users/alex/Documents/Projects/MovieGuide/app/build/intermediates/transforms/dexMerger/debug/10
+path.0=classes.dex
+renamed.0=classes.dex

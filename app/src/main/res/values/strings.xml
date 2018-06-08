@@ -13,4 +13,5 @@
     <string name="newest">Newest</string>
     <string name="highest_rated">Highest Rated</string>
     <string name="most_popular">Most Popular</string>
+    <string name="non_favorites">You don't have any movie selected as favorite</string>
 </resources>
