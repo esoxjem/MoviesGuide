@@ -2,24 +2,21 @@ package com.esoxjem.movieguide.listing.sorting;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.esoxjem.movieguide.BaseApplication;
 import com.esoxjem.movieguide.R;
+import com.esoxjem.movieguide.databinding.SortingOptionsBinding;
 import com.esoxjem.movieguide.listing.MoviesListingPresenter;
 
 import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author arun
@@ -29,19 +26,8 @@ public class SortingDialogFragment extends DialogFragment implements SortingDial
     @Inject
     SortingDialogPresenter sortingDialogPresenter;
 
-    @BindView(R.id.most_popular)
-    RadioButton mostPopular;
-    @BindView(R.id.highest_rated)
-    RadioButton highestRated;
-    @BindView(R.id.favorites)
-    RadioButton favorites;
-    @BindView(R.id.newest)
-    RadioButton newest;
-    @BindView(R.id.sorting_group)
-    RadioGroup sortingOptionsGroup;
-
     private static MoviesListingPresenter moviesListingPresenter;
-    private Unbinder unbinder;
+    private SortingOptionsBinding sortingOptionsBinding;
 
     public static SortingDialogFragment newInstance(MoviesListingPresenter moviesListingPresenter)
     {
@@ -63,8 +49,9 @@ public class SortingDialogFragment extends DialogFragment implements SortingDial
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View dialogView = inflater.inflate(R.layout.sorting_options, null);
-        unbinder = ButterKnife.bind(this, dialogView);
+        sortingOptionsBinding = DataBindingUtil.inflate(inflater, R.layout.sorting_options, null, false);
+
+        View dialogView = sortingOptionsBinding.getRoot();
         initViews();
 
         Dialog dialog = new Dialog(getActivity());
@@ -77,32 +64,32 @@ public class SortingDialogFragment extends DialogFragment implements SortingDial
     private void initViews()
     {
         sortingDialogPresenter.setLastSavedOption();
-        sortingOptionsGroup.setOnCheckedChangeListener(this);
+        sortingOptionsBinding.sortingGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
     public void setPopularChecked()
     {
-        mostPopular.setChecked(true);
+        sortingOptionsBinding.mostPopular.setChecked(true);
     }
 
 
     @Override
     public void setNewestChecked()
     {
-        newest.setChecked(true);
+        sortingOptionsBinding.newest.setChecked(true);
     }
 
     @Override
     public void setHighestRatedChecked()
     {
-        highestRated.setChecked(true);
+        sortingOptionsBinding.highestRated.setChecked(true);
     }
 
     @Override
     public void setFavoritesChecked()
     {
-        favorites.setChecked(true);
+        sortingOptionsBinding.favorites.setChecked(true);
     }
 
     @Override
@@ -142,6 +129,6 @@ public class SortingDialogFragment extends DialogFragment implements SortingDial
     {
         super.onDestroyView();
         sortingDialogPresenter.destroy();
-        unbinder.unbind();
+        sortingOptionsBinding.unbind();
     }
 }

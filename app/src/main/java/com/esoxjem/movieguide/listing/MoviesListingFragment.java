@@ -3,6 +3,7 @@ package com.esoxjem.movieguide.listing;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import com.esoxjem.movieguide.BaseApplication;
 import com.esoxjem.movieguide.Constants;
 import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.R;
+import com.esoxjem.movieguide.databinding.FragmentMoviesBinding;
 import com.esoxjem.movieguide.listing.sorting.SortingDialogFragment;
 
 import java.util.ArrayList;
@@ -26,21 +28,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class MoviesListingFragment extends Fragment implements MoviesListingView {
     @Inject
     MoviesListingPresenter moviesPresenter;
 
-    @BindView(R.id.movies_listing)
-    RecyclerView moviesListing;
-
+    private RecyclerView moviesListing;
     private RecyclerView.Adapter adapter;
     private List<Movie> movies = new ArrayList<>(20);
     private Callback callback;
-    private Unbinder unbinder;
+    private FragmentMoviesBinding fragmentMoviesBinding;
 
     public MoviesListingFragment() {
         // Required empty public constructor
@@ -62,8 +59,11 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        fragmentMoviesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
+        moviesListing = fragmentMoviesBinding.moviesListing;
+
+        View rootView = fragmentMoviesBinding.getRoot();
+
         initLayoutReferences();
         moviesListing.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -151,7 +151,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public void onDestroyView() {
         super.onDestroyView();
         moviesPresenter.destroy();
-        unbinder.unbind();
+        fragmentMoviesBinding.unbind();
     }
 
     @Override
