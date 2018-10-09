@@ -167,6 +167,12 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initLayoutReferences();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(Constants.MOVIE, (ArrayList<? extends Parcelable>) movies);
