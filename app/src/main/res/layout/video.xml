@@ -13,5 +13,11 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"/>
-
+    <ImageButton
+        android:layout_width="36dp"
+        android:id="@+id/play_button"
+        android:background="@null"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_play_circle_filled_black_24dp"
+        android:layout_height="36dp" />
 </FrameLayout>

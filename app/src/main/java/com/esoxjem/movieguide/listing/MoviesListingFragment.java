@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,12 +31,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MoviesListingFragment extends Fragment implements MoviesListingView {
+public class MoviesListingFragment extends Fragment implements MoviesListingView, SwipeRefreshLayout.OnRefreshListener {
     @Inject
     MoviesListingPresenter moviesPresenter;
 
     @BindView(R.id.movies_listing)
     RecyclerView moviesListing;
+
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.Adapter adapter;
     private List<Movie> movies = new ArrayList<>(20);
@@ -75,6 +79,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
                 }
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
         return rootView;
     }
 
@@ -143,8 +148,8 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     }
 
     @Override
-    public void onMovieClicked(Movie movie) {
-        callback.onMovieClicked(movie);
+    public void onMovieClicked(Movie movie,View view) {
+        callback.onMovieClicked(movie, view);
     }
 
     @Override
@@ -180,10 +185,16 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
         moviesPresenter.searchMovieBackPressed();
     }
 
-    public interface Callback {
-        void onMoviesLoaded(Movie movie);
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+        moviesPresenter.firstPage();
+    }
 
-        void onMovieClicked(Movie movie);
+    public interface Callback {
+        void  onMoviesLoaded(Movie movie);
+
+        void onMovieClicked(Movie movie,View view);
     }
 
 

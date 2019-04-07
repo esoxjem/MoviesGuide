@@ -51,7 +51,7 @@ public class MoviesListingAdapter extends RecyclerView.Adapter<MoviesListingAdap
 
         @Override
         public void onClick(View view) {
-            MoviesListingAdapter.this.view.onMovieClicked(movie);
+            MoviesListingAdapter.this.view.onMovieClicked(movie,view);
         }
     }
 

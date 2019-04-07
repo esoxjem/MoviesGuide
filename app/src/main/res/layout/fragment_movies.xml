@@ -4,10 +4,17 @@
              android:layout_height="match_parent"
              tools:context=".listing.MoviesListingFragment">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/swipe_refresh"
+        android:layout_height="wrap_content">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movies_listing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:visibility="gone"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

@@ -3,6 +3,7 @@ package com.esoxjem.movieguide.details;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,10 +14,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -184,10 +189,11 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             for (Video trailer : trailers)
             {
                 View thumbContainer = inflater.inflate(R.layout.video, this.trailers, false);
-                ImageView thumbView = ButterKnife.findById(thumbContainer, R.id.video_thumb);
-                thumbView.setTag(R.id.glide_tag, Video.getUrl(trailer));
+                ImageView thumbView = thumbContainer.findViewById( R.id.video_thumb);
+                ImageButton playButton = thumbContainer.findViewById( R.id.play_button);
+                playButton.setTag(R.id.glide_tag, Video.getUrl(trailer));
                 thumbView.requestLayout();
-                thumbView.setOnClickListener(this);
+                playButton.setOnClickListener(this);
                 Glide.with(getContext())
                         .load(Video.getThumbnailUrl(trailer))
                         .apply(options)
@@ -214,10 +220,12 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             for (Review review : reviews)
             {
                 ViewGroup reviewContainer = (ViewGroup) inflater.inflate(R.layout.review, reviewsContainer, false);
-                TextView reviewAuthor = ButterKnife.findById(reviewContainer, R.id.review_author);
-                TextView reviewContent = ButterKnife.findById(reviewContainer, R.id.review_content);
+                TextView reviewAuthor = reviewContainer.findViewById(R.id.review_author);
+                TextView reviewContent = reviewContainer.findViewById(R.id.review_content);
+
                 reviewAuthor.setText(review.getAuthor());
                 reviewContent.setText(review.getContent());
+
                 reviewContent.setOnClickListener(this);
                 reviewsContainer.addView(reviewContainer);
             }
@@ -241,7 +249,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
     {
         switch (view.getId())
         {
-            case R.id.video_thumb:
+            case R.id.play_button:
                 onThumbnailClick(view);
                 break;
 

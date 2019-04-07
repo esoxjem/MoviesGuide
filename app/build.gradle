@@ -17,13 +17,13 @@ def getProperty(String filename, String propName) {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+
 
     defaultConfig {
         applicationId "com.esoxjem.movieguide"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -54,7 +54,7 @@ android {
 }
 
 ext {
-    supportLibVersion = '26.1.0'
+    supportLibVersion = '27.1.1'
     okhttpVersion = '3.9.0'
     daggerVersion = '2.5'
     espressoVersion = '3.0.1'
@@ -101,12 +101,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
 
     // Tests
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.9.0'
-    androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.9.0'
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:${espressoVersion}") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:${espressoVersion}") {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'

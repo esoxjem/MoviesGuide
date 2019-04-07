@@ -1,6 +1,8 @@
 package com.esoxjem.movieguide.listing;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
@@ -8,8 +10,13 @@ import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.esoxjem.movieguide.R;
@@ -99,20 +106,22 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
     }
 
     @Override
-    public void onMovieClicked(Movie movie) {
+    public void onMovieClicked(Movie movie, View view) {
         if (twoPaneMode) {
             loadMovieFragment(movie);
         } else {
-            startMovieActivity(movie);
+            startMovieActivity(movie,view);
         }
     }
 
-    private void startMovieActivity(Movie movie) {
-        Intent intent = new Intent(this, MovieDetailsActivity.class);
-        Bundle extras = new Bundle();
-        extras.putParcelable(Constants.MOVIE, movie);
-        intent.putExtras(extras);
-        startActivity(intent);
+    private void startMovieActivity(Movie movie,View view) {
+
+           Intent intent = new Intent(this, MovieDetailsActivity.class);
+            Bundle extras = new Bundle();
+            extras.putParcelable(Constants.MOVIE, movie);
+            intent.putExtras(extras);
+            startActivity(intent);
+
     }
 
     private void loadMovieFragment(Movie movie) {
