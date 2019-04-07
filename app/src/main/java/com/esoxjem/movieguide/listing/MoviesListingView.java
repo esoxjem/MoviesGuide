@@ -14,5 +14,5 @@ interface MoviesListingView
     void showMovies(List<Movie> movies);
     void loadingStarted();
     void loadingFailed(String errorMessage);
-    void onMovieClicked(Movie movie,View view);
+    void onMovieClicked(Movie movie);
 }

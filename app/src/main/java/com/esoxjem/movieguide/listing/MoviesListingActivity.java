@@ -106,22 +106,20 @@ public class MoviesListingActivity extends AppCompatActivity implements MoviesLi
     }
 
     @Override
-    public void onMovieClicked(Movie movie, View view) {
+    public void onMovieClicked(Movie movie) {
         if (twoPaneMode) {
             loadMovieFragment(movie);
         } else {
-            startMovieActivity(movie,view);
+            startMovieActivity(movie);
         }
     }
 
-    private void startMovieActivity(Movie movie,View view) {
-
-           Intent intent = new Intent(this, MovieDetailsActivity.class);
+    private void startMovieActivity(Movie movie) {
+            Intent intent = new Intent(this, MovieDetailsActivity.class);
             Bundle extras = new Bundle();
             extras.putParcelable(Constants.MOVIE, movie);
             intent.putExtras(extras);
             startActivity(intent);
-
     }
 
     private void loadMovieFragment(Movie movie) {

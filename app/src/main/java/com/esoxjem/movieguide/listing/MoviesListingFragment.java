@@ -148,8 +148,8 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     }
 
     @Override
-    public void onMovieClicked(Movie movie,View view) {
-        callback.onMovieClicked(movie, view);
+    public void onMovieClicked(Movie movie) {
+        callback.onMovieClicked(movie);
     }
 
     @Override
@@ -194,7 +194,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public interface Callback {
         void  onMoviesLoaded(Movie movie);
 
-        void onMovieClicked(Movie movie,View view);
+        void onMovieClicked(Movie movie);
     }
 
 
