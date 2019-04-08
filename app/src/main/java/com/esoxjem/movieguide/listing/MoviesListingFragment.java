@@ -100,7 +100,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort:
-                moviesPresenter.firstPage();
+             //   moviesPresenter.firstPage();
                 displaySortingOptions();
         }
 
@@ -188,7 +188,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(false);
-        moviesPresenter.firstPage();
+       // moviesPresenter.firstPage();
     }
 
     public interface Callback {

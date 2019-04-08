@@ -1,6 +1,7 @@
 package com.esoxjem.movieguide.listing;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.util.EspressoIdlingResource;
@@ -45,6 +46,7 @@ class MoviesListingPresenterImpl implements MoviesListingPresenter {
     }
 
     private void displayMovies() {
+        Log.e("displayMovies", "displayMovies: " );
         EspressoIdlingResource.increment();
         showLoading();
         fetchSubscription = moviesInteractor.fetchMovies(currentPage)
