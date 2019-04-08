@@ -46,7 +46,7 @@ class MoviesListingPresenterImpl implements MoviesListingPresenter {
     }
 
     private void displayMovies() {
-        Log.e("displayMovies", "displayMovies: " );
+
         EspressoIdlingResource.increment();
         showLoading();
         fetchSubscription = moviesInteractor.fetchMovies(currentPage)
