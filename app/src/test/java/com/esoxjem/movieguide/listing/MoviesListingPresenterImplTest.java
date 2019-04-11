@@ -55,7 +55,7 @@ public class MoviesListingPresenterImplTest {
 
         // when:
         presenter.setView(view);
-
+        presenter.firstPage();
         // then:
         verify(view).showMovies(movies);
     }
