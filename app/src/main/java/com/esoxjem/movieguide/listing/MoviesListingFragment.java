@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +44,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     SwipeRefreshLayout swipeRefreshLayout;
 
     private RecyclerView.Adapter adapter;
+    private int pageNumber = 1;
     private List<Movie> movies = new ArrayList<>(20);
     private Callback callback;
     private Unbinder unbinder;
@@ -60,7 +63,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+      //    setRetainInstance(true);
         ((BaseApplication) getActivity().getApplication()).createListingComponent().inject(this);
     }
 
@@ -69,13 +72,16 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
         View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initLayoutReferences();
+
         moviesListing.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    moviesPresenter.nextPage();
+                    pageNumber++;
+                    moviesPresenter.nextPage(pageNumber,movies);
+
                 }
             }
         });
@@ -86,15 +92,25 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         moviesPresenter.setView(this);
         if (savedInstanceState != null) {
-            movies = savedInstanceState.getParcelableArrayList(Constants.MOVIE);
-            adapter.notifyDataSetChanged();
+
+            movies.clear();
+            pageNumber = savedInstanceState.getInt(Constants.PAGE_NUMBER);
+            movies.addAll(savedInstanceState.getParcelableArrayList(Constants.MOVIE));
             moviesListing.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
+
         } else {
-            moviesPresenter.firstPage();
+
+              moviesPresenter.firstPage();
+
         }
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,6 +129,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     }
 
     private void initLayoutReferences() {
+
         moviesListing.setHasFixedSize(true);
 
         int columns;
@@ -175,6 +192,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(Constants.MOVIE, (ArrayList<? extends Parcelable>) movies);
+        outState.putInt(Constants.PAGE_NUMBER,pageNumber);
     }
 
     public void searchViewClicked(String searchText){
@@ -188,7 +206,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(false);
-       // moviesPresenter.firstPage();
+        moviesPresenter.firstPage();
     }
 
     public interface Callback {
