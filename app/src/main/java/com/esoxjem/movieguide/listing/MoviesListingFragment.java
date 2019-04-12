@@ -63,7 +63,7 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-      //    setRetainInstance(true);
+        //  setRetainInstance(true);
         ((BaseApplication) getActivity().getApplication()).createListingComponent().inject(this);
     }
 
@@ -99,10 +99,13 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
             movies.clear();
             pageNumber = savedInstanceState.getInt(Constants.PAGE_NUMBER);
             movies.addAll(savedInstanceState.getParcelableArrayList(Constants.MOVIE));
+            Log.e("display0", "onViewCreated: "+movies.size() );
             moviesListing.setVisibility(View.VISIBLE);
+
             adapter.notifyDataSetChanged();
 
         } else {
+
 
               moviesPresenter.firstPage();
 
@@ -116,7 +119,8 @@ public class MoviesListingFragment extends Fragment implements MoviesListingView
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort:
-             //   moviesPresenter.firstPage();
+                moviesPresenter.firstPage();
+                pageNumber=1;
                 displaySortingOptions();
         }
 

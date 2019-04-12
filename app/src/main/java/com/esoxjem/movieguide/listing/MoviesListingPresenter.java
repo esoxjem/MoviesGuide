@@ -1,6 +1,6 @@
 package com.esoxjem.movieguide.listing;
 
-import android.graphics.Movie;
+import com.esoxjem.movieguide.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public interface MoviesListingPresenter
 
     void nextPage();
 
-    void nextPage(int pageNumber, List<com.esoxjem.movieguide.Movie> movies);
+    void nextPage(int pageNumber, List<Movie> movies);
 
     void setView(MoviesListingView view);
 
