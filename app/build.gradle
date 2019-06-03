@@ -19,15 +19,15 @@ def getProperty(String filename, String propName) {
 }
 
 android {
-    compileSdkVersion Dependencies.compileSdkVersion
-    buildToolsVersion Dependencies.buildToolsVersion
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.esoxjem.movieguide"
-        minSdkVersion Dependencies.minSdkVersion
-        targetSdkVersion Dependencies.targetSdkVersion
-        versionCode Dependencies.versionCode
-        versionName Dependencies.versionName
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
 
         buildConfigField "String", "TMDB_API_KEY", "\"${getProperty("local.properties", "tmdb_api_key")}\""
         buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/\""
@@ -60,48 +60,48 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //kotlin
-    implementation Libs.kotlin_std
-    implementation Libs.kotlin_reflect
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     //Support
-    implementation Libs.appcompat
-    implementation Libs.support
-    implementation Libs.design
-    implementation Libs.palattte
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:support-v4:28.0.0"
+    implementation "com.android.support:design:28.0.0"
+    implementation "com.android.support:palette-v7:28.0.0"
 
     // Rx
-    implementation Reactive.rxJava2
-    implementation Reactive.rxAndroid
+    implementation "io.reactivex.rxjava2:rxjava:2.1.9"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
 
     // Network
-    implementation Square.okhttp
-    implementation Square.okhttp_intercepter
-    implementation Glide.glide
-    implementation Glide.glideOkhttp3integration
+    implementation "com.squareup.okhttp3:okhttp:3.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"
+    implementation "com.github.bumptech.glide:glide:4.8.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.8.0"
 
     // Other
-    implementation Square.moshi
-    implementation Square.butterKnife
-    kapt Square.butterKnifeCompiler
+    implementation "com.squareup.moshi:moshi:1.5.0"
+    implementation "com.jakewharton:butterknife:8.8.1"
+    kapt "com.jakewharton:butterknife-compiler:8.8.1"
 
     // Dependency Injection
-    implementation Di.dagger
-    implementation Di.dagger_android
-    implementation Di.dagger_android_support
-    kapt Di.dagger_compiler
-    kapt Di.dagger_android_processor
+    implementation "com.google.dagger:dagger:2.15"
+    implementation "com.google.dagger:dagger-android:2.15"
+    implementation "com.google.dagger:dagger-android-support:2.15"
+    kapt "com.google.dagger:dagger-compiler:2.15"
+    kapt "com.google.dagger:dagger-android-processor:2.15"
 
     // Retrofit 2
-    implementation Square.retrofit
-    implementation Square.rxadapter
-    implementation Square.moshi_retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.3.0"
 
     // Tests
-    testImplementation TestLibs.junit
-    androidTestImplementation TestLibs.runner
-    testImplementation TestLibs.mockito
-    testImplementation TestLibs.mockito_kotlin
-    androidTestImplementation TestLibs.espresso
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    testImplementation "org.mockito:mockito-core:2.15.0"
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 }
 repositories {
     mavenCentral()
