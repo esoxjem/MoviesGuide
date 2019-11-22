@@ -19,3 +19,4 @@ Kotlin 버젼을 확인하려면 [here](https://github.com/esoxjem/MovieGuide-Ko
 ![screenshot4](http://imgur.com/m7J8HzUm.png)
 ![screenshot5](http://imgur.com/PwtjZHKm.png)
 ![screenshot6](http://imgur.com/kNHjCXSm.png)
+![screenshot6](https://i.imgur.com/EOWHAYw.png)
