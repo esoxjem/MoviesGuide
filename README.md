@@ -18,4 +18,4 @@ Check out the Kotlin version [here](https://github.com/esoxjem/MovieGuide-Kotlin
 ![screenshot3](http://imgur.com/4qHZcejm.png)
 ![screenshot4](http://imgur.com/m7J8HzUm.png)
 ![screenshot5](http://imgur.com/PwtjZHKm.png)
-![screenshot6](http://imgur.com/kNHjCXSm.png)
+![screenshot6](https://i.imgur.com/uxs5LMw.png)
