@@ -2,6 +2,7 @@ package com.esoxjem.movieguide.details;
 
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,27 +10,35 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.esoxjem.movieguide.Api;
 import com.esoxjem.movieguide.BaseApplication;
+import com.esoxjem.movieguide.Config;
 import com.esoxjem.movieguide.Constants;
 import com.esoxjem.movieguide.Movie;
 import com.esoxjem.movieguide.R;
 import com.esoxjem.movieguide.Review;
 import com.esoxjem.movieguide.Video;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import java.util.List;
 
@@ -72,6 +81,14 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
     @BindView(R.id.toolbar)
     @Nullable Toolbar toolbar;
 
+    //youtube player fragment
+    private YouTubePlayerSupportFragment youTubePlayerFragment;
+
+    //youtube player to play video when new video selected
+    private YouTubePlayer youTubePlayer;
+
+    private FragmentTransaction ft;
+
     private Movie movie;
     private Unbinder unbinder;
 
@@ -104,6 +121,9 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
         View rootView = inflater.inflate(R.layout.fragment_movie_details, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         setToolbar();
+        ft = getChildFragmentManager().beginTransaction();
+        initializeYoutubePlayer();
+
         return rootView;
     }
 
@@ -111,6 +131,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+
         if (getArguments() != null)
         {
             Movie movie = (Movie) getArguments().get(Constants.MOVIE);
@@ -167,6 +188,7 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             label.setVisibility(View.GONE);
             this.trailers.setVisibility(View.GONE);
             horizontalScrollView.setVisibility(View.GONE);
+            ft.hide(youTubePlayerFragment);
 
         } else
         {
@@ -185,8 +207,13 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             {
                 View thumbContainer = inflater.inflate(R.layout.video, this.trailers, false);
                 ImageView thumbView = ButterKnife.findById(thumbContainer, R.id.video_thumb);
-                thumbView.setTag(R.id.glide_tag, Video.getUrl(trailer));
+//                thumbView.setTag(R.id.glide_tag, Video.getUrl(trailer));
+                thumbView.setTag(R.id.glide_tag, trailer.getVideoId());
                 thumbView.requestLayout();
+
+                if(trailer == trailers.get(0))
+                    youTubePlayer.cueVideo(trailer.getVideoId());
+
                 thumbView.setOnClickListener(this);
                 Glide.with(getContext())
                         .load(Video.getThumbnailUrl(trailer))
@@ -223,6 +250,42 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
             }
         }
     }
+
+    private void initializeYoutubePlayer()
+    {
+        youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+
+        if (youTubePlayerFragment == null) {
+            Toast.makeText(getContext(), "Null fragment returned !!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        youTubePlayerFragment.initialize(Config.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
+                                                boolean wasRestored) {
+                if (!wasRestored) {
+                    youTubePlayer = player;
+
+                    //set the player style default
+                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider arg0, YouTubeInitializationResult arg1) {
+
+                //print or show error if initialization failed
+                Log.e("checking", "Youtube Player View initialization failed");
+                Toast.makeText(getContext(), "Failed to load trailer window !!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ft.add(R.id.youtube_player_fragment, youTubePlayerFragment).commit();
+
+    }
+
 
     @Override
     public void showFavorited()
@@ -271,9 +334,10 @@ public class MovieDetailsFragment extends Fragment implements MovieDetailsView, 
 
     private void onThumbnailClick(View view)
     {
-        String videoUrl = (String) view.getTag(R.id.glide_tag);
-        Intent playVideoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
-        startActivity(playVideoIntent);
+        String videoId = (String) view.getTag(R.id.glide_tag);
+        youTubePlayer.cueVideo(videoId);
+//        Intent playVideoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+//        startActivity(playVideoIntent);
     }
 
     private void onFavoriteClick()

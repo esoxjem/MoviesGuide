@@ -14,4 +14,7 @@
     <string name="highest_rated">Highest Rated</string>
     <string name="most_popular">Most Popular</string>
     <string name="action_search">Search</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
